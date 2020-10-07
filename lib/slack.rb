@@ -55,7 +55,7 @@ def main
     # )
 
     if user_input == 'list users'
-      User.list_all
+      tp User.list_all, 'slack_id', 'name', 'real_name'
       # tp response_users['members'], 'id', 'name', 'real_name'
     elsif user_input == 'list channels'
       # tp response_channels['channels'], 'name', 'purpose', 'num_members', 'id'
