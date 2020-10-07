@@ -3,6 +3,7 @@ require 'httparty'
 require 'dotenv'
 require 'awesome_print'
 require 'table_print'
+require_relative 'user'
 
 require_relative 'workspace'
 Dotenv.load
@@ -11,20 +12,20 @@ URL_USERS = "https://slack.com/api/users.list"
 URL_CHANNELS = "https://slack.com/api/conversations.list"
 
 def main
-  Class InvalidError < StandardError; end
+  # Class InvalidError < StandardError; end
 
 # if we want to create a custom error
-  unless response == 200
-    raise InvalidError,"Invalid #{response.code}"
-  end
-
-  unless response_users  == 200
-    raise ArgumentError.new("Something went wrong!")
-  end
-
-  unless response_channels  == 200
-    raise ArgumentError.new("Something went wrong!")
-  end
+#   unless response == 200
+#     raise InvalidError,"Invalid #{response.code}"
+#   end
+#
+#   unless response_users  == 200
+#     raise ArgumentError.new("Something went wrong!")
+#   end
+#
+#   unless response_channels  == 200
+#     raise ArgumentError.new("Something went wrong!")
+#   end
 
   unless ENV["SLACK_TOKEN"]
     puts "Could not load API key"
@@ -41,22 +42,23 @@ def main
 
     break if user_input.downcase == 'quit'
 
-    response_users = HTTParty.get(URL_USERS, query: {
-      token: ENV['SLACK_TOKEN'],
-      format: 'json'
-    }
-    )
-
-    response_channels = HTTParty.get(URL_CHANNELS, query: {
-        token: ENV['SLACK_TOKEN'],
-        format: 'json'
-    }
-    )
+    # response_users = HTTParty.get(URL_USERS, query: {
+    #   token: ENV['SLACK_TOKEN'],
+    #   format: 'json'
+    # }
+    # )
+    #
+    # response_channels = HTTParty.get(URL_CHANNELS, query: {
+    #     token: ENV['SLACK_TOKEN'],
+    #     format: 'json'
+    # }
+    # )
 
     if user_input == 'list users'
-      tp response_users['members'], 'id', 'name', 'real_name'
+      User.list_all
+      # tp response_users['members'], 'id', 'name', 'real_name'
     elsif user_input == 'list channels'
-      tp response_channels['channels'], 'name', 'purpose', 'num_members', 'id'
+      # tp response_channels['channels'], 'name', 'purpose', 'num_members', 'id'
     else
       puts "Invalid entry!"
     end
