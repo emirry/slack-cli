@@ -19,11 +19,11 @@ class Recipient
   }
   )
     return response
-
   end
 
   def self.list_all
     response = self.run_get_request(endpoint_path)
     return response[response_key].map { |record_hash| from_response_hash(record_hash) }
   end
+
 end

@@ -32,4 +32,6 @@ class User < Recipient
   def to_details
     return "-- Details -- \nName: #{name}, Slack ID: #{slack_id}, Real Name: #{real_name}"
   end
+
+
 end

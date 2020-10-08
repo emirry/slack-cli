@@ -18,7 +18,7 @@ class Workspace < Recipient
   def initialize
     @users = User.list_all
     @channels = Channel.list_all
-    @selected = "none selected"
+    @selected = nil
   end
 
   def select_user(user_to_select)
@@ -31,16 +31,24 @@ class Workspace < Recipient
     return @selected
   end
 
-  # def show_details #(path_to_details)
-  #   return @selected # = Recipient.path_to_details
-  # end
+  def to_details
+    return @selected.to_details# = Recipient.path_to_details
+  end
 
-    def to_details
-      return @selected.to_details# = Recipient.path_to_details
-    end
+  def no_selection?
+    @selected.nil?
+  end
 
-  # provide details about users and channels
-  # lists channels
-  # lists users
-  # possible methods: select_channel, select_user, show_details, send_message
+  def send_message(user_response)
+    url = "https://slack.com/api/chat.postMessage"
+
+    response = HTTParty.get(url, query:
+        {
+            token: ENV["SLACK_TOKEN"],
+            channel: @selected.slack_id,
+            text: user_response
+        }
+    )
+  end
+
 end
