@@ -13,25 +13,27 @@ require_relative 'recipient'
 Dotenv.load
 
 class Workspace < Recipient
-  attr_reader :users, :channels
+  attr_reader :users, :channels, :selected
 
   def initialize
     @users = User.list_all
     @channels = Channel.list_all
+    @selected = "none selected"
   end
 
   def select_user(user_to_select)
-    selection = @users.find { |user| user.name == user_to_select }
-    return selection
+    @selected = @users.find { |user| user.name == user_to_select }
+    return @selected
   end
 
   def select_channel(channel_to_select)
-    selection = @channels.find { |channel| channel.name == channel_to_select }
-    return selection
+    @selected = @channels
+    # @selected = @channels.find { |channel| channel.name == channel_to_select }
+    return @selected
   end
 
-  def show_details
-    return "Details! Details!"
+  def show_details #(path_to_details)
+    return @selected # = Recipient.path_to_details
   end
 
   # provide details about users and channels

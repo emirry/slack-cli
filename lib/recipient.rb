@@ -29,4 +29,8 @@ class Recipient
     #   tp response['channels'], 'name', 'purpose', 'num_members', 'id'
   end
 
+  #def path_to_details(details)
+  # return details
+  # end
+
 end

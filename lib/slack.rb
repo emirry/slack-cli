@@ -52,13 +52,15 @@ def main
     elsif user_input == 'select user'
       print 'Which user would you like to select?'
       user_to_select = gets.chomp
-      selection = workspace.select_user(user_to_select)
+      print "You selected #{user_to_select}"
+      workspace.select_user(user_to_select)
     elsif user_input == 'select channel'
       print 'Which channel would you like to select?'
       channel_to_select = gets.chomp
-      selection = workspace.select_channel(channel_to_select)
+      print "You selected #{channel_to_select}"
+      workspace.select_channel(channel_to_select)
     elsif user_input == 'show details'
-      puts workspace.show_details
+      p workspace.show_details
     else
       puts "Invalid entry!"
     end
