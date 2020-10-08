@@ -2,6 +2,8 @@
 require 'dotenv'
 
 class Recipient
+  class InvalidAPIError < StandardError; end
+
   attr_reader :name, :slack_id
 
   def initialize(name, slack_id)
@@ -13,11 +15,16 @@ class Recipient
     base_url = 'https://slack.com/api/'
     method_url = base_url + path
 
-  response = HTTParty.get(method_url, query: {
+    response = HTTParty.get(method_url, query: {
     token: ENV['SLACK_TOKEN'],
     format: 'json'
   }
   )
+
+    unless response.code == 200
+      raise InvalidAPIError, "Something went wrong!"
+    end
+
     return response
   end
 

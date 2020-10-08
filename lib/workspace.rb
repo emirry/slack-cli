@@ -1,8 +1,3 @@
-# require_relative 'user'
-# require_relative 'channel'
-
-
-
 require 'httparty'
 require 'dotenv'
 require 'awesome_print'
@@ -32,7 +27,7 @@ class Workspace < Recipient
   end
 
   def to_details
-    return @selected.to_details# = Recipient.path_to_details
+    return @selected.to_details
   end
 
   def no_selection?
