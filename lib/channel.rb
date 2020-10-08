@@ -24,5 +24,4 @@ class Channel < Recipient
   def self.from_response_hash(record_hash)
     return Channel.new(record_hash['id'], record_hash['name'], record_hash['topic']['value'], record_hash['num_members'])
   end
-
 end

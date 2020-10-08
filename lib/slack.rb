@@ -8,8 +8,10 @@ require_relative 'channel'
 require_relative 'workspace'
 Dotenv.load
 
-URL_USERS = "https://slack.com/api/users.list"
-URL_CHANNELS = "https://slack.com/api/conversations.list"
+# URL_USERS = "https://slack.com/api/users.list"
+# URL_CHANNELS = "https://slack.com/api/conversations.list"
+
+
 
 def main
   # Class InvalidError < StandardError; end
@@ -35,43 +37,34 @@ def main
   puts "Welcome to the Ada Slack CLI! 'quit' to quit"
 
   while true
-
-    puts "Choose: list users | list channels | quit"
+    puts "Choose: list users | list channels | select user | select channel | show details | quit"
 
     user_input = gets.chomp
 
     break if user_input.downcase == 'quit'
 
-    # response_users = HTTParty.get(URL_USERS, query: {
-    #   token: ENV['SLACK_TOKEN'],
-    #   format: 'json'
-    # }
-    # )
-    #
-    # response_channels = HTTParty.get(URL_CHANNELS, query: {
-    #     token: ENV['SLACK_TOKEN'],
-    #     format: 'json'
-    # }
-    # )
-
     if user_input == 'list users'
       tp User.list_all, 'slack_id', 'name', 'real_name'
-      # tp response_users['members'], 'id', 'name', 'real_name'
     elsif user_input == 'list channels'
       tp Channel.list_all, 'slack_id','name', 'topic', 'member_count'
-      # tp response_channels['channels'], 'name', 'purpose', 'num_members', 'id'
+    elsif user_input == 'select user'
+      print 'Which user would you like to select?'
+      user_to_select = gets.chomp
+      puts Workspace.select_user(user_to_select)
+    elsif user_input == 'select channel'
+      print 'Which channel would you like to select?'
+      channel_to_select = gets.chomp
+      puts Workspace.select_channel(channel_to_select)
+    elsif user_input == 'show details'
+      puts Workspace.show_details
     else
       puts "Invalid entry!"
     end
 
   end
 
-
   workspace = Workspace.new
-  # user should see how many channels and users there are
-  #   list users: see list of users (username, real name, slack id)
-  #   list channels: list of channels (channel's name, topic, member count, slack id)
-  #   quit
+
   puts "Thank you for using the Ada Slack CLI"
 end
 
