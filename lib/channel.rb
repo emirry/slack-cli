@@ -4,11 +4,10 @@ require_relative 'recipient'
 require 'table_print'
 
 class Channel < Recipient
-  attr_reader :topic, :member_count
+  attr_reader :name, :slack_id, :topic, :member_count
 
-  def initialize(slack_id, name, topic, member_count)
-    super(slack_id, name)
-
+  def initialize(name, slack_id, topic, member_count)
+    super(name, slack_id)
     @topic = topic
     @member_count = member_count
   end
@@ -22,10 +21,10 @@ class Channel < Recipient
   end
 
   def self.from_response_hash(record_hash)
-    return Channel.new(record_hash['id'], record_hash['name'], record_hash['topic']['value'], record_hash['num_members'])
+    return Channel.new(record_hash['name'], record_hash['id'], record_hash['topic']['value'], record_hash['num_members'])
   end
 
-  #def details
-  # return instnace of channel(record_hash['id'], record_hash['name'], record_hash['topic']['value'], record_hash['num_members'])
-  #
+  def to_details
+    return "-- Details --\nName: #{name}, Slack ID: #{slack_id}, Topic: #{topic}, Member Count: #{member_count.to_s}"
+  end
 end

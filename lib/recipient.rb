@@ -1,11 +1,12 @@
+# require_relative 'workspace'
 require 'dotenv'
 
 class Recipient
-  attr_reader :slack_id, :name
+  attr_reader :name, :slack_id
 
-  def initialize(slack_id, name)
-    @slack_id = slack_id
+  def initialize(name, slack_id)
     @name = name
+    @slack_id = slack_id
   end
 
   def self.run_get_request(path)
@@ -24,13 +25,5 @@ class Recipient
   def self.list_all
     response = self.run_get_request(endpoint_path)
     return response[response_key].map { |record_hash| from_response_hash(record_hash) }
-
-    # elsif path == 'conversations.list'
-    #   tp response['channels'], 'name', 'purpose', 'num_members', 'id'
   end
-
-  #def path_to_details(details)
-  # return details
-  # end
-
 end

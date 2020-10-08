@@ -27,14 +27,17 @@ class Workspace < Recipient
   end
 
   def select_channel(channel_to_select)
-    @selected = @channels
-    # @selected = @channels.find { |channel| channel.name == channel_to_select }
+    @selected = @channels.find { |channel| channel.name == channel_to_select }
     return @selected
   end
 
-  def show_details #(path_to_details)
-    return @selected # = Recipient.path_to_details
-  end
+  # def show_details #(path_to_details)
+  #   return @selected # = Recipient.path_to_details
+  # end
+
+    def to_details
+      return @selected.to_details# = Recipient.path_to_details
+    end
 
   # provide details about users and channels
   # lists channels

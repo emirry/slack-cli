@@ -39,36 +39,34 @@ def main
   puts "Welcome to the Ada Slack CLI! 'quit' to quit"
 
   while true
-    puts "Choose: list users | list channels | select user | select channel | show details | quit"
+    puts "\nChoose: list users | list channels | select user | select channel | show details | quit"
 
     user_input = gets.chomp
 
     break if user_input.downcase == 'quit'
 
     if user_input == 'list users'
-      tp User.list_all, 'slack_id', 'name', 'real_name'
+      tp User.list_all, 'name', 'slack_id', 'real_name'
     elsif user_input == 'list channels'
-      tp Channel.list_all, 'slack_id','name', 'topic', 'member_count'
+      tp Channel.list_all, 'name', 'slack_id', 'topic', 'member_count'
     elsif user_input == 'select user'
-      print 'Which user would you like to select?'
+      print 'Which user would you like to select? '
       user_to_select = gets.chomp
       print "You selected #{user_to_select}"
       workspace.select_user(user_to_select)
     elsif user_input == 'select channel'
-      print 'Which channel would you like to select?'
+      print 'Which channel would you like to select? '
       channel_to_select = gets.chomp
-      print "You selected #{channel_to_select}"
+      print "You selected #{channel_to_select}!" # validate user input here
       workspace.select_channel(channel_to_select)
     elsif user_input == 'show details'
-      p workspace.show_details
+      # tp workspace.show_details, 'name', 'slack_id', 'real_name'
+      print workspace.to_details
     else
       puts "Invalid entry!"
     end
 
   end
-
-
-
   puts "Thank you for using the Ada Slack CLI"
 end
 

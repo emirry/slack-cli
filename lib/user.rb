@@ -7,10 +7,11 @@ require 'table_print'
 Dotenv.load
 
 class User < Recipient
-  attr_reader :real_name, :status_text, :status_emoji
+  attr_reader :name, :slack_id, :real_name
+              # :status_text, :status_emoji
 
-  def initialize(slack_id, name, real_name)
-    super(slack_id, name)
+  def initialize(name, slack_id, real_name)
+    super(name, slack_id)
     @real_name = real_name
     # @status_text
     # @status_emoji
@@ -25,10 +26,10 @@ class User < Recipient
   end
 
   def self.from_response_hash(record_hash)
-    return User.new(record_hash['id'], record_hash['name'], record_hash['real_name'])
+    return User.new(record_hash['name'], record_hash['id'], record_hash['real_name'])
+  end
+
+  def to_details
+    return "-- Details -- \nName: #{name}, Slack ID: #{slack_id}, Real Name: #{real_name}"
   end
 end
-
-#record_hash['real_name']['value']
-#
-# dig helper method - stops looking once reaches nil within deep data structure. method of hash
