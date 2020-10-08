@@ -34,6 +34,8 @@ def main
     exit
   end
 
+  workspace = Workspace.new
+
   puts "Welcome to the Ada Slack CLI! 'quit' to quit"
 
   while true
@@ -50,20 +52,20 @@ def main
     elsif user_input == 'select user'
       print 'Which user would you like to select?'
       user_to_select = gets.chomp
-      puts Workspace.select_user(user_to_select)
+      selection = workspace.select_user(user_to_select)
     elsif user_input == 'select channel'
       print 'Which channel would you like to select?'
       channel_to_select = gets.chomp
-      puts Workspace.select_channel(channel_to_select)
+      selection = workspace.select_channel(channel_to_select)
     elsif user_input == 'show details'
-      puts Workspace.show_details
+      puts workspace.show_details
     else
       puts "Invalid entry!"
     end
 
   end
 
-  workspace = Workspace.new
+
 
   puts "Thank you for using the Ada Slack CLI"
 end

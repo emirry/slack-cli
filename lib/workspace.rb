@@ -12,7 +12,7 @@ require_relative 'channel'
 require_relative 'recipient'
 Dotenv.load
 
-class Workspace
+class Workspace < Recipient
   attr_reader :users, :channels
 
   def initialize
@@ -20,17 +20,17 @@ class Workspace
     @channels = Channel.list_all
   end
 
-  def self.select_user(user_to_select)
+  def select_user(user_to_select)
     selection = @users.find { |user| user.name == user_to_select }
     return selection
   end
 
-  def self.select_channel(channel_to_select)
+  def select_channel(channel_to_select)
     selection = @channels.find { |channel| channel.name == channel_to_select }
     return selection
   end
 
-  def self.show_details
+  def show_details
     return "Details! Details!"
   end
 

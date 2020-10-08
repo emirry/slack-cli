@@ -6,7 +6,6 @@ class Recipient
   def initialize(slack_id, name)
     @slack_id = slack_id
     @name = name
-
   end
 
   def self.run_get_request(path)
