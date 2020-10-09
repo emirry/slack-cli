@@ -22,19 +22,32 @@ describe "User class" do
   end
 
   # describe 'User.from_response_hash' do
+  #   it "" do
   #   VCR.use_cassette("from_response_hash") do
-  #     @users = User.from_response_hash
+  #     # @users = User.from_response_hash
   #
-  #     expect(@users).must_be_instance_of Array
+  #     expect(User.from_response_hash(path)).must_be_instance_of Array
   #   end
 
   describe 'User.list_all' do
-    VCR.use_cassette("list_all") do
-    # @users = User.list_all
+    it "prints out an array of users" do
+      VCR.use_cassette("list_all") do
+      @users = User.list_all
 
-    expect(User.list_all).must_be_kind_of Array
+      expect(@users).must_be_kind_of Array
+      end
+    end
+
+    it "has the correct number of users" do
+      VCR.use_cassette("list_all") do
+        array = User.list_all.length
+        p array
+
+        expect(array).must_equal 5
+      end
     end
   end
+  # end
 
 
 end
