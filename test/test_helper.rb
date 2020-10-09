@@ -1,13 +1,12 @@
-require_relative '../lib/user'
-require_relative '../lib/channel'
-require_relative '../lib/recipient'
-require_relative '../lib/workspace'
-
 require 'simplecov'
 SimpleCov.start do
   add_filter 'test/'
 end
 
+require_relative '../lib/user'
+require_relative '../lib/channel'
+require_relative '../lib/recipient'
+require_relative '../lib/workspace'
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/reporters'
@@ -27,8 +26,8 @@ VCR.configure do |config|
   }
 
   # Don't leave our token lying around in a cassette file.
-    config.filter_sensitive_data("<LOCATIONIQ_TOKEN>") do
-      ENV["LOCATIONIQ_TOKEN"]
+    config.filter_sensitive_data("<SLACK_TOKEN>") do
+      ENV["SLACK_TOKEN"]
     end
 end
 

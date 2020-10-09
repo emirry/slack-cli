@@ -62,10 +62,12 @@ def main
   end
 
   workspace = Workspace.new
-
   puts "Welcome to the Ada Slack CLI! 'quit' to quit"
+  puts "There are #{User.list_all.length} users."
+  puts "There are #{Channel.list_all.length} channels."
 
   driver(workspace)
+
 
   puts "Thank you for using the Ada Slack CLI"
 end

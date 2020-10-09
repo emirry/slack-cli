@@ -12,6 +12,7 @@ class Recipient
   end
 
   def self.run_get_request(path)
+    sleep(1)
     base_url = 'https://slack.com/api/'
     method_url = base_url + path
 
@@ -20,9 +21,12 @@ class Recipient
     format: 'json'
   }
   )
-
     unless response.code == 200
-      raise InvalidAPIError, "Something went wrong!"
+      raise InvalidAPIError, "Something went wrong! Error code: #{response.code}"
+    end #write test
+
+    unless response["ok"]
+      raise InvalidAPIError, "#{response["error"]}"
     end
 
     return response
