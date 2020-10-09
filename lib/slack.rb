@@ -56,9 +56,6 @@ end
 def main
   # Class InvalidError < StandardError; end
 
-
-
-
   unless ENV["SLACK_TOKEN"]
     puts "Could not load API key"
     exit
