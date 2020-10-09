@@ -25,5 +25,6 @@ VCR.configure do |config|
     config.filter_sensitive_data("<LOCATIONIQ_TOKEN>") do
       ENV["LOCATIONIQ_TOKEN"]
     end
-
 end
+
+
