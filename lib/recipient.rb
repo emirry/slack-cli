@@ -1,4 +1,3 @@
-# require_relative 'workspace'
 require 'dotenv'
 
 class Recipient
@@ -12,18 +11,19 @@ class Recipient
   end
 
   def self.run_get_request(path)
-    sleep(1)
+    sleep(0.5)
     base_url = 'https://slack.com/api/'
     method_url = base_url + path
 
     response = HTTParty.get(method_url, query: {
     token: ENV['SLACK_TOKEN'],
     format: 'json'
-  }
+    }
   )
+
     unless response.code == 200
-      raise InvalidAPIError, "Something went wrong! Error code: #{response.code}"
-    end #write test
+      raise InvalidAPIError, "Error! Status code: #{response.code}"
+    end
 
     unless response["ok"]
       raise InvalidAPIError, "#{response["error"]}"
@@ -36,5 +36,4 @@ class Recipient
     response = self.run_get_request(endpoint_path)
     return response[response_key].map { |record_hash| from_response_hash(record_hash) }
   end
-
 end

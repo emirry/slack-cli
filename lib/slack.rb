@@ -14,7 +14,7 @@ def driver(workspace)
 
     user_input = gets.chomp
 
-    break if user_input.downcase == 'quit'
+    exit if user_input.downcase == 'quit'
 
     case user_input
     when 'list users'
@@ -24,13 +24,21 @@ def driver(workspace)
     when 'select user'
       print 'Which user would you like to select? '
       user_to_select = gets.chomp
-      print "You selected #{user_to_select}!" # validate user input here
-      workspace.select_user(user_to_select)
+      if workspace.user_doesnt_exist?(user_to_select)
+        puts "Invalid user name. What would you like to do?"
+        driver(workspace)
+      elsif workspace.select_user(user_to_select)
+        print "Successfully selected #{user_to_select}!"
+      end
     when 'select channel'
       print 'Which channel would you like to select? '
       channel_to_select = gets.chomp
-      print "You selected #{channel_to_select}!" # validate user input here
-      workspace.select_channel(channel_to_select)
+      if workspace.channel_doesnt_exist?(channel_to_select)
+        puts "Invalid channel name. What would you like to do?"
+        driver(workspace)
+      elsif workspace.select_channel(channel_to_select)
+        print "Successfully selected #{channel_to_select}!"
+      end
     when 'show details'
       if workspace.no_selection? # would like to refactor this for DRY
         puts "Nothing was selected!"
@@ -45,7 +53,9 @@ def driver(workspace)
       else
         puts "What would you like to say?"
         user_response = gets.chomp
-        workspace.send_message(user_response)
+        # selected = workspace.return_selected
+        selected_slack_id = workspace.return_selected.slack_id
+        workspace.send_message(selected_slack_id, user_response)
       end
     else
       puts "Invalid entry!"
@@ -54,7 +64,6 @@ def driver(workspace)
 end
 
 def main
-  # Class InvalidError < StandardError; end
 
   unless ENV["SLACK_TOKEN"]
     puts "Could not load API key"
@@ -67,7 +76,6 @@ def main
   puts "There are #{Channel.list_all.length} channels."
 
   driver(workspace)
-
 
   puts "Thank you for using the Ada Slack CLI"
 end

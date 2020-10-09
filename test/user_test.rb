@@ -3,7 +3,7 @@ require_relative 'test_helper'
 describe "User class" do
   describe "User instantiation" do
     before do
-      @user = User.new("Slackbot", 27253, "Slackbot Lovelace")
+      @user = User.new("Slackbot", "27253", "Slackbot Lovelace")
     end
 
     it "is an instance of User class" do
@@ -12,7 +12,7 @@ describe "User class" do
 
     it "has attributes: name, slack_id, and real_name" do
       expect(@user.name).must_equal "Slackbot"
-      expect(@user.slack_id).must_equal 27253
+      expect(@user.slack_id).must_equal "27253"
       expect(@user.real_name).must_equal "Slackbot Lovelace"
     end
   end
@@ -34,6 +34,4 @@ describe "User class" do
       end
     end
   end
-
-
 end
