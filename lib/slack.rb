@@ -28,7 +28,7 @@ def driver(workspace)
         puts "Invalid user name. What would you like to do?"
         driver(workspace)
       elsif workspace.select_user(user_to_select)
-        print "Successfully selected #{user_to_select}!"
+        print "Successfully selected #{workspace.return_selected.name}!"
       end
     when 'select channel'
       print 'Which channel would you like to select? '
@@ -37,7 +37,7 @@ def driver(workspace)
         puts "Invalid channel name. What would you like to do?"
         driver(workspace)
       elsif workspace.select_channel(channel_to_select)
-        print "Successfully selected #{channel_to_select}!"
+        print "Successfully selected #{workspace.return_selected.name}!"
       end
     when 'show details'
       if workspace.no_selection? # would like to refactor this for DRY
@@ -53,7 +53,6 @@ def driver(workspace)
       else
         puts "What would you like to say?"
         user_response = gets.chomp
-        # selected = workspace.return_selected
         selected_slack_id = workspace.return_selected.slack_id
         workspace.send_message(selected_slack_id, user_response)
       end
